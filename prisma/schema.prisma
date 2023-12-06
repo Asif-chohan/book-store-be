@@ -17,10 +17,11 @@ model Book {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @default(now())
   deletedAt      DateTime?
+  orders    Order[]
 }
 
 
-model users {
+model Users {
   id                  Int                   @id @default(autoincrement())
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @default(now())
@@ -28,5 +29,21 @@ model users {
   email               String                @unique
   firstName           String
   lastName            String
-  uid                 String                @unique
+  password            String
+  points               Float                 @default(100)
+  orders              Order[]
+}
+
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  bookId    Int
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  deletedAt DateTime?
+
+  user      Users     @relation(fields: [userId], references: [id])
+  book      Book     @relation(fields: [bookId], references: [id])
 }

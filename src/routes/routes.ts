@@ -3,12 +3,26 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, HttpStatusCodeLiteral, TsoaResponse, fetchMiddlewares } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { AuthController } from './../controllers/AuthController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { BookController } from './../controllers/BooksController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { OrderController } from './../controllers/OrderController';
 import type { RequestHandler, Router } from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "Partial_Users_": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"double"},"createdAt":{"dataType":"datetime"},"updatedAt":{"dataType":"datetime"},"deletedAt":{"dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"enum","enums":[null]}]},"email":{"dataType":"string"},"firstName":{"dataType":"string"},"lastName":{"dataType":"string"},"password":{"dataType":"string"},"points":{"dataType":"double"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "LoginRequest": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"password":{"dataType":"string","required":true},"email":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "BookInterface": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"deletedAt":{"dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"enum","enums":[null]}]},"updatedAt":{"dataType":"datetime"},"createdAt":{"dataType":"datetime"},"tags":{"dataType":"array","array":{"dataType":"string"},"required":true},"point":{"dataType":"double","required":true},"coverImage":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"required":true},"writer":{"dataType":"string","required":true},"title":{"dataType":"string","required":true},"id":{"dataType":"double","required":true}},"validators":{}},
@@ -17,6 +31,23 @@ const models: TsoaRoute.Models = {
     "Partial_BookInterface_": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"double"},"title":{"dataType":"string"},"writer":{"dataType":"string"},"coverImage":{"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},"point":{"dataType":"double"},"tags":{"dataType":"array","array":{"dataType":"string"}},"createdAt":{"dataType":"datetime"},"updatedAt":{"dataType":"datetime"},"deletedAt":{"dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"enum","enums":[null]}]}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PurchaseRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "userId": {"dataType":"double","required":true},
+            "bookId": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CancelRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "userId": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -29,6 +60,56 @@ export function RegisterRoutes(app: Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+        app.post('/auth/register',
+            ...(fetchMiddlewares<RequestHandler>(AuthController)),
+            ...(fetchMiddlewares<RequestHandler>(AuthController.prototype.register)),
+
+            function AuthController_register(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"Partial_Users_"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new AuthController();
+
+
+              const promise = controller.register.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/auth/login',
+            ...(fetchMiddlewares<RequestHandler>(AuthController)),
+            ...(fetchMiddlewares<RequestHandler>(AuthController.prototype.login)),
+
+            function AuthController_login(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"LoginRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new AuthController();
+
+
+              const promise = controller.login.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/books',
             ...(fetchMiddlewares<RequestHandler>(BookController)),
             ...(fetchMiddlewares<RequestHandler>(BookController.prototype.getBooks)),
@@ -175,6 +256,82 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.deleteBook.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/orders/purchase',
+            ...(fetchMiddlewares<RequestHandler>(OrderController)),
+            ...(fetchMiddlewares<RequestHandler>(OrderController.prototype.purchaseBook)),
+
+            function OrderController_purchaseBook(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"PurchaseRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new OrderController();
+
+
+              const promise = controller.purchaseBook.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/orders/cancel/:orderId',
+            ...(fetchMiddlewares<RequestHandler>(OrderController)),
+            ...(fetchMiddlewares<RequestHandler>(OrderController.prototype.cancelOrder)),
+
+            function OrderController_cancelOrder(request: any, response: any, next: any) {
+            const args = {
+                    orderId: {"in":"path","name":"orderId","required":true,"dataType":"double"},
+                    request: {"in":"body","name":"request","required":true,"ref":"CancelRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new OrderController();
+
+
+              const promise = controller.cancelOrder.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/orders/user/:userId',
+            ...(fetchMiddlewares<RequestHandler>(OrderController)),
+            ...(fetchMiddlewares<RequestHandler>(OrderController.prototype.getOrdersByUserId)),
+
+            function OrderController_getOrdersByUserId(request: any, response: any, next: any) {
+            const args = {
+                    userId: {"in":"path","name":"userId","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new OrderController();
+
+
+              const promise = controller.getOrdersByUserId.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

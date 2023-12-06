@@ -13,7 +13,6 @@ const app = express();
 const port = 3000;
 app.use(bodyParser.json());
 const specs = swaggerJsdoc(swaggerOptions);
-
 RegisterRoutes(app);
 app.use(function errorHandler(
   err: unknown,
